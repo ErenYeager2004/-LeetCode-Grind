@@ -1,33 +1,28 @@
 class Solution {
 public:
-    int romanToInt(string str1) {
-        map<char, int> roman;
-        roman.insert(pair<char, int>('I', 1));
-        roman.insert(pair<char, int>('V', 5));
-        roman.insert(pair<char, int>('X', 10));
-        roman.insert(pair<char, int>('L', 50));
-        roman.insert(pair<char, int>('C', 100));
-        roman.insert(pair<char, int>('D', 500));
-        roman.insert(pair<char, int>('M', 1000));
+    int romanToInt(string s) {
+        map<char,int>table;
+        table['I'] = 1;
+        table['V'] = 5;
+        table['X'] = 10;
+        table['L'] = 50;
+        table['C'] = 100;
+        table['D'] = 500;
+        table['M'] = 1000;
+        int prev = 0;
+        int total = 0;
         
-        int len = str1.length(),num,sum=0;
-
-        for(int i=0;i<len;){
-            if(i == (len-1)){
-                num = roman[str1[i]];
-                i++;
+        for(int i=s.size()-1;i>=0;i--){
+            int curr = table[s[i]];
+            if(curr < prev){
+                total-=curr;
+            }else{
+                total+=curr;
             }
-            else if(roman[str1[i]] < roman[str1[i+1]]){
-                num = roman[str1[i+1]] - roman[str1[i]];
-                i = i+2;
-            }
-            else{
-                num = roman[str1[i]];
-                i++;
-            }
-            sum = sum + num;
+            prev = curr;
         }
 
-        return sum;
+        return total;
+
     }
 };
